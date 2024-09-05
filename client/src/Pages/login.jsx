@@ -11,7 +11,6 @@ const Login = () => {
     e.preventDefault();
 
     const loginUser = { email, password };
-
     const response = await fetch("http://localhost:4000/login", {
       method: "POST",
       body: JSON.stringify(loginUser),
@@ -19,60 +18,63 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     });
-
     const result = await response.json();
-    
+
     if (!response.ok) {
       setError(result.error);
     } else {
       setError("");
       setEmail("");
       setPassword("");
-      localStorage.setItem('token', result.token); // Save the token to local storage (optional)
+      sessionStorage.setItem('token', result.token);
       navigate("/home");
     }
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gray-100'>
-      <div className='bg-white rounded-sm p-6 shadow large w-full max-w-md'>
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        <div className='mb-4'>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="email" className='block text-gray-700 mb-2'>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-500">
+      <div className="bg-white p-8 rounded-3xl shadow-lg max-w-md w-full transform hover:scale-105 transition-transform duration-500">
+        <h2 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-pink-500 to-red-500 mb-6">
+          Login
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-700 mb-2">
               Email
             </label>
             <input
               type="email"
-              className='w-full px-3 py-2 border border-gray-300 rounded-md'
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder='Enter your Email'
+              placeholder="Enter your Email"
               required
             />
-            <label htmlFor="password" className='block text-gray-700 mb-2 mt-4'>
+          </div>
+          <div className="mb-6">
+            <label htmlFor="password" className="block text-gray-700 mb-2">
               Password
             </label>
             <input
               type="password"
-              className='w-full px-3 py-2 border border-gray-300 rounded-md'
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder='Enter your Password'
+              placeholder="Enter your Password"
               required
             />
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 mt-4"
-            >
-              Login
-            </button>
-          </form>
-        </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full py-3 bg-gradient-to-r from-yellow-400 via-pink-500 to-red-500 text-white rounded-full shadow-lg transform hover:scale-110 transition-transform duration-500"
+          >
+            Login
+          </button>
+        </form>
         <div className="mt-6 text-center">
           <p className="text-gray-700">
             Not a user?{" "}
-            <Link to="/register" className="text-blue-500 hover:underline">
+            <Link to="/register" className="text-pink-500 hover:underline">
               Register here
             </Link>
           </p>
